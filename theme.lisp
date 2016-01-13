@@ -1,0 +1,22 @@
+(in-package :stumpwm)
+
+(set-font "-*-liberation mono-*-r-*-*-*-120-100-*-*-*-*-*")
+(set-fg-color "#61afef")
+(set-bg-color "#38394c")
+(set-border-color "#38394c")
+(set-win-bg-color "#282c34")
+(set-focus-color "#1f5582")
+(set-unfocus-color "#21252b")
+(setf *maxsize-border-width* 2)
+(setf *transient-border-width* 2)
+(setf *normal-border-width* 2)
+(set-msg-border-width 10)
+(setf *window-border-style* :thin)
+
+(setf *message-window-gravity* :top)
+(setf *input-window-gravity* :top)
+(setf *message-window-padding* 14)
+(setf *mouse-follows-focus* t)
+
+(set-maxsize-gravity :center)
+(set-transient-gravity :top)
