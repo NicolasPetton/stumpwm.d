@@ -1,0 +1,9 @@
+(("Default" 2 T NIL :CLASS "Firefox" :INSTANCE "Navigator" :TITLE NIL :ROLE
+  "browser")
+ ("Default" 0 T NIL :CLASS "Skype" :INSTANCE "skype" :TITLE NIL :ROLE NIL)
+ ("Default" 5 T NIL :CLASS "Skype" :INSTANCE "skype" :TITLE NIL :ROLE
+  "ConversationsWindow")
+ ("Default" 4 T NIL :CLASS "XTerm" :INSTANCE "xterm" :TITLE NIL :ROLE NIL)
+ ("Default" 3 T NIL :CLASS "Slack" :INSTANCE "slack" :TITLE NIL :ROLE
+  "browser-window")
+ ("Default" 1 T NIL :CLASS "Emacs" :INSTANCE "emacs" :TITLE NIL :ROLE NIL))

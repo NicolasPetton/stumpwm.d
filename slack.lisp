@@ -11,17 +11,30 @@
 (defun slack-say (message)
   (let ((token (slack-token))
         (team "foretagsplatsen")
-        (username "nico")
-        (channel "C02N47RE1")
-        (avatar "https://s.gravatar.com/avatar/a3c3672b9004598db722ec181362f91a?s=80"))
+        (channel "C02N47RE1"))
     (curl-get (format nil
-                      "https://~A.slack.com/api/chat.postMessage?token=~A&channel=~A&text=~A&username=~A&icon_url=~A"
+                      "https://~A.slack.com/api/chat.postMessage?token=~A&channel=~A&text=~A&as_user=true"
                       team
                       token
                       channel
-                      (do-urlencode:urlencode message)
-                      username
-                      avatar))))
+                      (do-urlencode:urlencode message)))))
+
+(defun slack-set-presence (presence)
+  (let ((token (slack-token))
+        (team "foretagsplatsen")
+        (channel "C02N47RE1"))
+    (curl-get (format nil
+                      "https://~A.slack.com/api/presence.set?presence=~A&token=~A&channel=~A&as_user=true"
+                      team
+                      presence
+                      token
+                      channel))))
+
+(defun slack-set-away ()
+  (slack-set-presence "away"))
+
+(defun slack-set-active ()
+  (slack-set-presence "active"))
 
 (defun slack-running-p ()
   (find-matching-windows '(:class "Slack") t t))

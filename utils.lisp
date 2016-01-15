@@ -31,8 +31,9 @@
 (defcommand xlock () ()
   (run-shell-command "exec xlock -mode blank"))
 
-(defun curl-get (url &optional get-result)
-  (run-shell-command (format nil "curl \"~A\"" url) get-result))
+(defun curl-get (url &optional collect-output (max-time 10))
+  (run-shell-command (format nil "curl -m ~A \"~A\"" max-time url)
+                     collect-output))
 
 (defun echo-progress (val &key label width)
   (message "~A ~A% ~A"
