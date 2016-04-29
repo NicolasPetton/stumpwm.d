@@ -1,14 +1,24 @@
 (in-package :stumpwm)
 (load-user-module "utils")
 (load-user-module "multimedia")
-(load-user-module "clipboard-manager")
 
 (set-prefix-key (kbd "C-t"))
+
+;; focus follow mouse
+;; (setf *mouse-focus-policy* :sloppy)
 (setf *mouse-focus-policy* :click)
 
+
 (defapp "firefox")
+(defapp "devtools")
 (defapp "skype")
 (defapp "slack")
+
+(defcommand popup-xterm () ()
+  "popup a new xterm window."
+  (popup)
+  (without-windows-placement-rules
+      (run-shell-command "xterm")))
 
 (global-set-key (kbd "s-x") "colon")
 (global-set-key (kbd "s-y") "clipboard-manager")
@@ -37,11 +47,10 @@
 (global-set-key (kbd "M-TAB") "fnext")
 (global-set-key (kbd "M-ISO_Left_Tab") "fprev")
 (global-set-key (kbd "s-TAB") "fnext")
-(define-key *root-map* (kbd "o") "other")
-(global-set-key (kbd "s-2") "vsplit")
-(global-set-key (kbd "s-3") "hsplit")
-(global-set-key (kbd "s-1") "only")
-(global-set-key (kbd "s-0") "remove")
+(define-key *root-map* (kbd "1") "only")
+(define-key *root-map* (kbd "2") "vsplit")
+(define-key *root-map* (kbd "3") "hsplit")
+(define-key *root-map* (kbd "0") "remove")
 (global-set-key (kbd "s-r") "iresize")
 (global-set-key (kbd "s-'") "select")
 

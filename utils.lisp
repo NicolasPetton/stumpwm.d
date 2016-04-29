@@ -7,6 +7,13 @@
      ,(format nil "Run ~A unless it is already running, in which case focus it." command)
      (run-or-raise ,command '(:class ,(string-capitalize win-class)))))
 
+(defmacro without-windows-placement-rules (&rest body)
+  `(let ((rules *window-placement-rules*))
+    (clear-window-placement-rules)
+    ,@body
+    (run-with-timer 1 nil (lambda ()
+       (setf *window-placement-rules* rules)))))
+
 ;; prompt the user for an interactive command. The first arg is an
 ;; optional initial contents.
 (defcommand colon1 (&optional (initial "")) (:rest)
@@ -34,6 +41,21 @@
 (defun curl-get (url &optional collect-output (max-time 10))
   (run-shell-command (format nil "curl -m ~A \"~A\"" max-time url)
                      collect-output))
+
+(defun popup ()
+  "Split vertically or horizontally depending on the context."
+  (let* ((group (current-group))
+        (frame (tile-group-current-frame group)))
+    (if (> (frame-width frame) (frame-height frame))
+        (hsplit)
+        (vsplit))
+    (fnext)))
+
+(defmacro with-popup (&rest body)
+  "Split depending on the context and evaluate BODY."
+  `(progn
+     (popup)
+     ,@body))
 
 (defun echo-progress (val &key label width)
   (message "~A ~A% ~A"

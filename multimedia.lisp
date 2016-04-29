@@ -1,5 +1,15 @@
 (in-package :stumpwm)
 (load-user-module "utils")
+(load-user-module "battery")
+
+(setf stumpwm:*screen-mode-line-format*
+      (list ;; "%w | "
+       " %g | %c | %M | %l | %b | "
+       '(:eval (stumpwm:run-shell-command "date +\"%a %b %d %H:%M\"" t))))
+
+;; (stumpwm:run-shell-command "emacs --quick --batch --eval '(let ((battery-echo-area-format \"%t %p%%\")) (battery))'" t)
+
+(setf *mode-line-timeout* 5)
 
 (defun brightness-adjust (delta)
   (run-shell-command (concat "exec xbacklight " delta))
@@ -15,14 +25,14 @@
   (brightness-adjust "-10"))
 
 (defun volume-get ()
-  (let ((output (run-shell-command "amixer -D pulse get Master" t)))
+  (let ((output (run-shell-command "amixer get Master" t)))
     (multiple-value-bind (result matches)
         (cl-ppcre:scan-to-strings "([0-9]+)%" output)
       (read-from-string (aref matches 0)))))
 
 (defun volume-adjust (delta)
   "DELTA should be like \"5%+\"."
-  (run-shell-command (format nil "amixer -D pulse set Master ~D" delta))
+  (run-shell-command (format nil "amixer set Master ~D" delta))
   ;; (run-shell-command "play ~/.stumpwm.d/sounds/drip.ogg")
   (echo-progress (volume-get) :label "Volume" :width 40))
 

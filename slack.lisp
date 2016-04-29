@@ -5,8 +5,12 @@
 (ql:quickload :do-urlencode)
 (load-user-module "utils")
 
+(defvar *slack-token-file* "~/.priv/slack_token")
+
 (defun slack-token ()
-  (pass "slack-token"))
+  (with-open-file (in *slack-token-file* :direction :input)
+    (with-standard-io-syntax
+      (read-line in))))
 
 (defun slack-say (message)
   (let ((token (slack-token))

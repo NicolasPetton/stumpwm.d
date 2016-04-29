@@ -6,60 +6,68 @@
 ;;; `create-window-placement-rules' to help with the creation of placement rules
 ;;; from the current windows.
 
-(load-user-module "slack")
+;; (load-user-module "slack")
 
 (defcommand brest-setup () ()
-  (brest-monitor-setup)
   (clear-window-placement-rules)
+  (run-shell-command "~/.screenlayout/brest-office.sh" t)
+  ;; otherwise I get errors sometimes, do that before placing windows
+  (refresh-heads)
+
   (restore-from-file "~/.stumpwm.d/dumps/brest-office.desktop")
   (restore-window-placement-rules "~/.stumpwm.d/dumps/brest-office.rules")
-  (refresh-heads)  ; otherwise I get errors sometimes, do that before placing
-                   ; windows
   (place-existing-windows)
+
+  (skype)
   (firefox)
   (slack)
-  (skype)
   (run-or-raise "xterm" '(:class "Xterm"))
   (emacs)
-  (set-xrate))
 
-(defcommand brest-monitor-setup () ()
-  (run-shell-command "~/.screenlayout/brest-office.sh"))
+  (enable-mode-line (current-screen)
+                    (nth 0 (screen-heads (current-screen)))
+                    nil)
+  (enable-mode-line (current-screen)
+                    (nth 1 (screen-heads (current-screen)))
+                    t)
+  (set-xrate))
 
 (defcommand laptop-setup () ()
   (clear-window-placement-rules)
+  (run-shell-command "~/.screenlayout/laptop.sh" t)
+  ;; otherwise I get errors sometimes, do that before placing windows
+  (refresh-heads)
+
   (restore-from-file "~/.stumpwm.d/dumps/laptop.desktop")
   (restore-window-placement-rules "~/.stumpwm.d/dumps/laptop.rules")
-  (refresh-heads) ; otherwise I get errors sometimes, do that before placing
-                  ; windows
   (place-existing-windows)
+
   (firefox)
   (emacs)
-  (set-xrate))
 
-(defcommand start-brest () ()
+  (enable-mode-line (current-screen)
+                    (nth 0 (screen-heads (current-screen)))
+                    t)
+
+    (set-xrate))
+
+(defcommand work-start-brest () ()
   "This command sets up windows and frames for work, and start slack, etc."
-  (work-clock-in)
-  (brest-setup)
-  ;; (slack-hello)
-  )
+  (work-start)
+  (brest-setup))
 
-(defcommand stop-work () ()
+(defcommand work-stop () ()
   "The end of the day has come, time to go home!"
-  ;; (slack-bye)
   (delete-all-windows "Skype")
-  (work-clock-out)
+  (work-stop)
   (xlock))
 
 (defcommand lunch () ()
-  (work-clock-out)
-  ;; (slack-lunch)
+  (work-lunch)
   (xlock))
 
 (defcommand back-from-lunch () ()
-  (work-clock-in)
-  ;; (slack-back-from-lunch)
-  )
+  (work-back-from-lunch))
 
 (defun delete-all-windows (window-class)
   "Delete all window of class WINDOW-CLASS."
@@ -73,31 +81,18 @@
   (dolist (win (group-windows (current-group)))
     (make-rule-for-window win nil nil)))
 
-(defun slack-hello ()
-  (slack-say "Hello guys!")
-  (slack-set-active)
-  (unless (slack-running-p)
-    (slack)))
-
-(defun slack-lunch ()
-  (slack-say "Lunch time!")
-  (slack-set-away))
-
-(defun slack-back-from-lunch () ()
-       (slack-say "Back from lunch!")
-       (slack-set-active))
-
-(defun slack-bye ()
-  (slack-say "Time to go! See you guys tomorrow!")
-  (slack-set-away)
-  (slack-kill))
-
 (defun set-xrate ()
-  ;; for some reason I have to reevaluate tnis
-  (run-shell-command "xset r rate 200 100"))
+  ;; for some reason I have to reevaluate this
+  (run-shell-command "xset r rate 250 50"))
 
-(defun work-clock-in ()
-  (run-shell-command "emacsclient -ne \"(work-clock-in)\""))
+(defun work-start ()
+  (run-shell-command "emacsclient -ne \"(work-start)\""))
 
-(defun work-clock-out ()
-  (run-shell-command "emacsclient -ne \"(work-clock-out)\""))
+(defun work-stop ()
+  (run-shell-command "emacsclient -ne \"(work-stop)\""))
+
+(defun work-lunch ()
+  (run-shell-command "emacsclient -ne \"(work-lunch)\""))
+
+(defun work-back-from-lunch ()
+  (run-shell-command "emacsclient -ne \"(work-back-from-lunch)\""))

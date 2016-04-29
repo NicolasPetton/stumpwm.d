@@ -2,7 +2,7 @@
 (swank-loader:init)
 
 (defcommand swank () ()
-    (swank:create-server :port 4005
+  (swank:create-server :port 4005
                        :style swank:*communication-style*
                        :dont-close t)
   (echo-string (current-screen)
