@@ -2,12 +2,12 @@
 (load-user-module "utils")
 (load-user-module "battery")
 
+(setq disk::*disk-usage-paths* '("/" "/home"))
+
 (setf stumpwm:*screen-mode-line-format*
       (list ;; "%w | "
-       " %g | %c | %M | %l | %b | "
+       " %g | %c | %M | %l | %b | %D | "
        '(:eval (stumpwm:run-shell-command "date +\"%a %b %d %H:%M\"" t))))
-
-;; (stumpwm:run-shell-command "emacs --quick --batch --eval '(let ((battery-echo-area-format \"%t %p%%\")) (battery))'" t)
 
 (setf *mode-line-timeout* 5)
 

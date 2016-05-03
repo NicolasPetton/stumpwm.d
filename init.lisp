@@ -10,7 +10,8 @@
                         "mem"
                         "net"
                         "wifi"
-                        "disk"))
+                        "disk"
+                        "ttf-fonts"))
 
 (defun load-user-module (name)
   (load (make-pathname :defaults *stumpwm-config-dir*
@@ -28,4 +29,4 @@
 (load-user-module "clipboard-manager")
 
 ;; startup commands
-(run-shell-command "xautolock -locker \"xlock -mode blank\"")
+(run-shell-command "xautolock -locker \"xlock -mode blank -dpmsoff 10\"")

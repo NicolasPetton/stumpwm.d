@@ -36,7 +36,7 @@
 " (run-shell-command (format nil "pass ~A" key) t)))
 
 (defcommand xlock () ()
-  (run-shell-command "exec xlock -mode blank"))
+  (run-shell-command "exec xlock -mode blank -dpmsoff 10"))
 
 (defun curl-get (url &optional collect-output (max-time 10))
   (run-shell-command (format nil "curl -m ~A \"~A\"" max-time url)
@@ -67,11 +67,11 @@
   (let* ((width (or width 20))
          (progress (round (* width (/ val 100))))
          (rest (- width progress)))
-    (concat "|"
-            (apply #'concat (loop repeat progress collect "="))
-            ">"
+    (concat "["
+            (apply #'concat (loop repeat progress collect "|"))
+            "|"
             (apply #'concat (loop repeat rest collect " "))
-            "|")))
+            "]")))
 
 ;; Web jump (works for DuckDuckGo and Imdb)
 (defmacro make-web-jump (name prefix)

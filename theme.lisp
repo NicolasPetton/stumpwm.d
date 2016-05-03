@@ -1,13 +1,9 @@
 (in-package :stumpwm)
 
-;; use xfontsel to select the font
-;; (set-font "Deja Vu Sans Mono:style=Regular:size=12:antialias=true")
-(set-font "Fira Mono:style=Regular:size=11:antialias=true")
-(set-font "-*-Fira-Mono-*-r-*-*-*-120-100-*-*-*-*-*")
 (set-fg-color "#61afef")
 (set-bg-color "#21252b")
 (set-border-color "#21252b")
-(set-win-bg-color "#21252b")
+g(set-win-bg-color "#21252b")
 (set-focus-color "#61afef")
 (set-unfocus-color "#21252b")
 (setf *maxsize-border-width* 1)
@@ -29,3 +25,10 @@
 (set-transient-gravity :top)
 
 (run-shell-command "xsetroot -display :0 -solid '#282c34'")
+
+(xft:cache-fonts)
+(set-font (make-instance 'xft:font
+                         :family "Fira Mono"
+                         :subfamily "Bold"
+                         :size 11
+                         :antialiased t))

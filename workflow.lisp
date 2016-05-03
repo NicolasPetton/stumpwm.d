@@ -49,7 +49,7 @@
                     (nth 0 (screen-heads (current-screen)))
                     t)
 
-    (set-xrate))
+  (set-xrate))
 
 (defcommand work-start-brest () ()
   "This command sets up windows and frames for work, and start slack, etc."
