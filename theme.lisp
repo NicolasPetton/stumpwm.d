@@ -3,7 +3,7 @@
 (set-fg-color "#61afef")
 (set-bg-color "#21252b")
 (set-border-color "#21252b")
-g(set-win-bg-color "#21252b")
+(set-win-bg-color "#21252b")
 (set-focus-color "#61afef")
 (set-unfocus-color "#21252b")
 (setf *maxsize-border-width* 1)
