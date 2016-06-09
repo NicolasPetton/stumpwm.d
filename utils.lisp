@@ -36,7 +36,7 @@
 " (run-shell-command (format nil "pass ~A" key) t)))
 
 (defcommand xlock () ()
-  (run-shell-command "exec xlock -mode blank -dpmsoff 10"))
+  (run-shell-command "exec xlock -mode blank -dpmsoff 1"))
 
 (defun curl-get (url &optional collect-output (max-time 10))
   (run-shell-command (format nil "curl -m ~A \"~A\"" max-time url)

@@ -51,14 +51,15 @@
 
   (set-xrate))
 
-(defcommand work-start-brest () ()
+(defcommand start-work-brest () ()
   "This command sets up windows and frames for work, and start slack, etc."
   (work-start)
   (brest-setup))
 
-(defcommand work-stop () ()
+(defcommand stop-work () ()
   "The end of the day has come, time to go home!"
   (delete-all-windows "Skype")
+  (delete-all-windows "Slack")
   (work-stop)
   (xlock))
 

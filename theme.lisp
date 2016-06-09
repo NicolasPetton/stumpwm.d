@@ -30,5 +30,7 @@
 (set-font (make-instance 'xft:font
                          :family "Fira Mono"
                          :subfamily "Bold"
-                         :size 11
+                         :size 10
                          :antialiased t))
+
+(setf *mode-line-position* :bottom)
