@@ -5,6 +5,8 @@
 (defvar *stumpwm-config-dir* "~/.stumpwm.d/"
   "StumpWM configuration directory.")
 
+(set-module-dir "~/build/stumpwm-contrib")
+
 ;; load some contrib modules
 (mapcar #'load-module '("cpu"
                         "mem"

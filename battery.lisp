@@ -1,4 +1,4 @@
-(in-package #:stumpwm)
+(in-package :stumpwm)
 
 (defun sysfs-battery-files ()
   "Return the battery path of each battery file in sysfs."
@@ -34,8 +34,6 @@
                   (cdr (assoc 'energy-full data)))
                100.0))
           (parse-battery-files)))
-
-(read-battery-file (cadr (sysfs-battery-files)))
 
 (defun power-ac-p ()
   (string= (with-open-file (file (pathname "/sys/class/power_supply/AC/online"))
