@@ -21,8 +21,10 @@
     result))
 
 (defun parse-battery-info (raw)
-  `((energy-now . ,(parse-integer (cadr (assoc "POWER_SUPPLY_ENERGY_NOW" raw :test #'string=))))
-    (energy-full . ,(parse-integer (cadr (assoc "POWER_SUPPLY_ENERGY_FULL" raw :test #'string=))))))
+  `((energy-now . ,(parse-integer (or (cadr (assoc "POWER_SUPPLY_ENERGY_NOW" raw :test #'string=))
+                                      (cadr (assoc "POWER_SUPPLY_CHARGE_NOW" raw :test #'string=)))))
+    (energy-full . ,(parse-integer (or (cadr (assoc "POWER_SUPPLY_ENERGY_FULL" raw :test #'string=))
+                                        (cadr (assoc "POWER_SUPPLY_CHARGE_FULL" raw :test #'string=)))))))
 
 (defun parse-battery-files ()
   (mapcar #'parse-battery-info
