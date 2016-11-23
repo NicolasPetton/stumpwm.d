@@ -51,6 +51,24 @@
 
   (set-xrate))
 
+(defcommand x220-setup () ()
+  (clear-window-placement-rules)
+  ;; otherwise I get errors sometimes, do that before placing windows
+  (refresh-heads)
+
+  (restore-from-file "~/.stumpwm.d/dumps/x220.desktop")
+  (restore-window-placement-rules "~/.stumpwm.d/dumps/x220.rules")
+  (place-existing-windows)
+
+  (firefox)
+  (emacs)
+
+  (enable-mode-line (current-screen)
+                    (nth 0 (screen-heads (current-screen)))
+                    t)
+
+  (set-xrate))
+
 (defcommand start-work-brest () ()
   "This command sets up windows and frames for work, and start slack, etc."
   (work-start)
